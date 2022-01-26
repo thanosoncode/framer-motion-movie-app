@@ -1,25 +1,39 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { Route, Routes } from "react-router-dom";
+import { GlobalStyle } from "./components/styles/GlobalStyle";
+import MovieDetails from "./components/MovieDetails";
+import { ThemeProvider } from "styled-components";
+import MovieList from "./components/MovieList";
+import Navbar from "./components/Navbar";
+import NotFound from "./components/NotFound";
+import { useGlobalContext } from "./context";
+import { AnimatePresence } from "framer-motion";
+import { useLocation } from "react-router";
 
-function App() {
+const App = () => {
+  const { theme } = useGlobalContext();
+  let location = useLocation();
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <ThemeProvider theme={theme}>
+        <GlobalStyle />
+        <AnimatePresence exitBeforeEnter>
+          <Routes location={location} key={location.key}>
+            <Route path="/" element={<Navbar />}>
+              <Route path="/" element={<MovieList />} />
+              <Route path="/toprated" element={<MovieList />} />
+              <Route path="/bestselling" element={<MovieList />} />
+              <Route path="/search" element={<MovieList />} />
+            </Route>
+
+            <Route path="/movie/:id" element={<MovieDetails />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </AnimatePresence>
+      </ThemeProvider>
+    </>
   );
-}
+};
 
 export default App;
