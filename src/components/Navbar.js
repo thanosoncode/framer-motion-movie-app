@@ -9,6 +9,9 @@ import {
   Li,
   Span,
   Links,
+  SwitchContainer,
+  Tools,
+  Flex,
 } from "./styles/Navbar.styled.js";
 import { useGlobalContext } from "../context.js";
 import { AnimatePresence, motion } from "framer-motion";
@@ -24,8 +27,16 @@ const popularURL =
   "https://api.themoviedb.org/3/discover/movie?api_key=31e2e4cb7fcd919ecae1823621328dc9&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1";
 
 const Navbar = () => {
-  const { term, setTerm, getMoviesByTerm, getMovies, setTheme, themes } =
-    useGlobalContext();
+  const {
+    term,
+    setTerm,
+    getMoviesByTerm,
+    getMovies,
+    setTheme,
+    themes,
+    setDatesOneByOne,
+    datesOneByOne,
+  } = useGlobalContext();
 
   const themesEl = useRef();
   const [showMenu, setShowMenu] = useState(false);
@@ -47,6 +58,10 @@ const Navbar = () => {
     getMoviesByTerm(term);
     setTerm("");
     navigate("/search");
+  };
+
+  const handleHowDatesPulse = () => {
+    setDatesOneByOne(!datesOneByOne);
   };
 
   return (
@@ -109,7 +124,18 @@ const Navbar = () => {
               <Link to={{ pathname: "/bestselling" }}>best selling</Link>
             </Li>
           </Links>
-          <div>
+          <Flex>
+            <Tools>
+              <span>dates 1&#8211;1</span>
+              <SwitchContainer
+                onClick={handleHowDatesPulse}
+                move={datesOneByOne ? "translateX(100%)" : "translateX(0)"}
+                datesOneByOne={datesOneByOne ? "on" : "off"}
+              >
+                <div></div>
+              </SwitchContainer>
+            </Tools>
+
             <Span
               ref={themesEl}
               onClick={handleThemesClick}
@@ -126,7 +152,7 @@ const Navbar = () => {
                 onChange={(e) => setTerm(e.target.value)}
               />
             </form>
-          </div>
+          </Flex>
         </StyledNav>
       </Container>
       <Outlet />

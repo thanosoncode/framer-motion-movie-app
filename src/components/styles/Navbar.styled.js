@@ -30,11 +30,6 @@ export const StyledNav = styled(motion.nav)`
     color: inherit;
   }
 
-  div {
-    display: flex;
-    align-items: center;
-  }
-
   input {
     outline: none;
     padding: 5px 10px;
@@ -44,17 +39,30 @@ export const StyledNav = styled(motion.nav)`
   @media (max-width: 768px) {
     padding: 8px 20px;
     flex-direction: column-reverse;
-
-    div {
-      margin-bottom: 10px;
+    input {
+      padding: 5px;
+      width: 150px;
     }
   }
+
+  @media (max-width: 400px) {
+    padding: 8px 5px;
+  }
+`;
+
+export const Flex = styled.div`
+  display: flex;
+  align-items: center;
 `;
 
 export const Links = styled.ul`
   list-style-type: none;
   display: flex;
   align-items: center;
+
+  @media (max-width: 768px) {
+    margin-top: 10px;
+  }
 `;
 
 export const Li = styled.li`
@@ -72,6 +80,10 @@ export const Span = styled.span`
 
   font-weight: 600;
   color: ${({ menu, theme }) => (menu === "open" ? theme.accent : theme.color)};
+
+  @media (max-width: 768px) {
+    margin-right: 5px;
+  }
 `;
 
 export const DropDownUl = styled(motion.ul)`
@@ -105,5 +117,39 @@ export const ThemesLi = styled.li`
 
   &:hover {
     opacity: 0.8;
+  }
+`;
+
+export const Tools = styled.div`
+  display: flex;
+  align-items: center;
+  margin-right: 10px;
+  justify-content: center;
+
+  span {
+    margin-right: 5px;
+    display: block;
+  }
+`;
+
+export const SwitchContainer = styled.div`
+  position: relative;
+  background-color: ${({ theme, datesOneByOne }) =>
+    datesOneByOne === "on" ? theme.accent : theme.bg};
+  width: 38px;
+  height: 18px;
+  border-radius: 999px;
+
+  div {
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    left: 1px;
+    border-radius: 100%;
+    background-color: white;
+    cursor: pointer;
+    border: 1px solid #777;
+    transition: 0.3s ease;
+    transform: ${(props) => props.move};
   }
 `;

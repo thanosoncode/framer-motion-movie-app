@@ -9,7 +9,7 @@ const imageURL = "https://image.tmdb.org/t/p/w200";
 
 const Movie = ({ movie, index }) => {
   let navigate = useNavigate();
-  const { setId, movies } = useGlobalContext();
+  const { setId, movies, datesOneByOne } = useGlobalContext();
 
   const {
     poster_path,
@@ -66,8 +66,9 @@ const Movie = ({ movie, index }) => {
 
   const [pulseDates, setPulseDates] = useState(false);
   useEffect(() => {
-    let time = movies.length * duration + 2 * delay + "000";
-
+    let time = (movies.length * duration + 2 * delay) * 1000;
+    console.log(time);
+    console.log(movies.length);
     setTimeout(() => {
       setPulseDates(true);
     }, time);
@@ -86,8 +87,12 @@ const Movie = ({ movie, index }) => {
           <h1 onClick={handleMovieClick}>{title}</h1>
           <motion.h4
             initial={{ opacity: 1 }}
-            animate={pulseDates && { opacity: [0, 1, 0, 1, 0, 1, 0, 1] }}
-            transition={{ duration: 2, delay: index * 0.5 }}
+            animate={pulseDates && { opacity: [1, 0, 1, 0, 1, 0, 1] }}
+            transition={
+              datesOneByOne
+                ? { duration: 2, delay: index * 2 }
+                : { duration: 2, delay: 0 }
+            }
           >
             {release_date}
           </motion.h4>

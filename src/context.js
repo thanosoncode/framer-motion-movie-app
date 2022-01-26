@@ -24,6 +24,7 @@ export const AppContextProvider = ({ children }) => {
   const [theme, setTheme] = useState(dark);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(false);
+  const [datesOneByOne, setDatesOneByOne] = useState(false);
 
   const getMovies = async (URL) => {
     setError(false);
@@ -81,6 +82,8 @@ export const AppContextProvider = ({ children }) => {
     getMovies,
     isLoading,
     error,
+    datesOneByOne,
+    setDatesOneByOne,
   };
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
