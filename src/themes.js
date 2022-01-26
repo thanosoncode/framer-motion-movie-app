@@ -17,7 +17,7 @@ export const eclipse = {
 export const carbon = {
   name: "carbon",
   bg: "#575D5E",
-  bg2: "#E3D9C6",
+  bg2: "#9f988b",
   accent: "#ED6B21",
   color: "#F7F7F7",
 };
@@ -25,7 +25,7 @@ export const carbon = {
 export const honeywell = {
   name: "honeywell",
   bg: "#636767",
-  bg2: "#F7F7F7",
+  bg2: "#C43932",
   accent: "#C43932",
   color: "#F7F7F7",
 };
@@ -35,7 +35,7 @@ export const leviathan = {
   bg: "#293044",
   bg2: "#BAEE75",
   accent: "#6374A5",
-  color: "#BAEE75",
+  color: "#6374A5",
 };
 
 export const eighty = {
@@ -49,7 +49,7 @@ export const eighty = {
 export const space = {
   name: "space",
   bg: "#5A5E61",
-  bg2: "#F7F7F7",
+  bg2: "#136EA3",
   accent: "#136EA3",
   color: "#F7F7F7",
 };
