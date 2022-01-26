@@ -101,6 +101,10 @@ export const DropDownUl = styled(motion.ul)`
   gap: 8px;
   box-shadow: 0 4px 14px ${({ theme }) => theme.bg};
   z-index: 5;
+
+  @media (max-width: 768px) {
+    padding: 6px 14px 2px 14px;
+  }
 `;
 
 export const ThemesLi = styled.li`
@@ -117,6 +121,10 @@ export const ThemesLi = styled.li`
 
   &:hover {
     opacity: 0.8;
+  }
+
+  @media (max-width: 768px) {
+    margin-bottom: 8px;
   }
 `;
 

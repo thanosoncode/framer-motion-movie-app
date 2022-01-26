@@ -136,6 +136,7 @@ export const Genres = styled(motion.div)`
     div {
       padding: 4px 6px;
       font-size: 0.8rem;
+      margin-right: 5px;
     }
   }
 `;
