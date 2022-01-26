@@ -67,12 +67,10 @@ const Movie = ({ movie, index }) => {
   const [pulseDates, setPulseDates] = useState(false);
   useEffect(() => {
     let time = (movies.length * duration + 2 * delay) * 1000;
-    console.log(time);
-    console.log(movies.length);
     setTimeout(() => {
       setPulseDates(true);
     }, time);
-  }, [movies]);
+  }, [movies, delay, duration]);
 
   return (
     <StyledMovie variants={cardVariants} initial="hidden" animate="visible">
