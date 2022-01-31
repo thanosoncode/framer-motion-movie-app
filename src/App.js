@@ -1,17 +1,19 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
-import { GlobalStyle } from "./components/styles/GlobalStyle";
-import MovieDetails from "./components/MovieDetails";
+import { GlobalStyle } from "./components/globalstyle/GlobalStyle";
+import MovieDetails from "./components/MovieDetails/MovieDetails";
 import { ThemeProvider } from "styled-components";
-import MovieList from "./components/MovieList";
-import Navbar from "./components/Navbar";
-import NotFound from "./components/NotFound";
+import MovieList from "./components/MovieList/MovieList";
+import Navbar from "./components/Navbar/Navbar";
+import NotFound from "./components/404/NotFound";
 import { useGlobalContext } from "./context";
 import { AnimatePresence } from "framer-motion";
 import { useLocation } from "react-router";
+import Home from "./components/Home/Home";
 
 const App = () => {
-  const { theme } = useGlobalContext();
+  const { theme, topRated, mostViewed, bestSelling, searched } =
+    useGlobalContext();
   let location = useLocation();
 
   return (
@@ -21,10 +23,20 @@ const App = () => {
         <AnimatePresence exitBeforeEnter>
           <Routes location={location} key={location.key}>
             <Route path="/" element={<Navbar />}>
-              <Route path="/" element={<MovieList />} />
-              <Route path="/toprated" element={<MovieList />} />
-              <Route path="/bestselling" element={<MovieList />} />
-              <Route path="/search" element={<MovieList />} />
+              <Route path="/" element={<Home />} />
+              <Route
+                path="/toprated"
+                element={<MovieList movies={topRated} />}
+              />
+              <Route
+                path="/mostviewed"
+                element={<MovieList movies={mostViewed} />}
+              />
+              <Route
+                path="/bestselling"
+                element={<MovieList movies={bestSelling} />}
+              />
+              <Route path="/search" element={<MovieList movies={searched} />} />
             </Route>
 
             <Route path="/movie/:id" element={<MovieDetails />} />

@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { Button } from "./styles/MovieDetails.styled";
+import { Button } from "../MovieDetails/MovieDetails.styled";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 

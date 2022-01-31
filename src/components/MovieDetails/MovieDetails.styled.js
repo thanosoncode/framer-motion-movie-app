@@ -5,12 +5,19 @@ export const Container = styled(motion.div)`
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+  background-image: ${({ img }) => img};
   width: 100vw;
-  height: 100vh;
+  min-height: 100vh;
   opacity: 0.3;
   position: relative;
   z-index: -1;
   overflow: hidden;
+
+  margin-bottom: 50px;
+
+  @media (max-width: 768px) {
+    background-image: ${({ mobileImg }) => mobileImg};
+  }
 `;
 
 export const Card = styled.div`
@@ -46,12 +53,19 @@ export const Card = styled.div`
   }
 `;
 
+export const Footer = styled.footer`
+  position: relative;
+  padding-bottom: 100px;
+  padding-top: 40px;
+`;
+
 export const Button = styled(motion.button)`
   display: block;
   position: absolute;
-  bottom: -100px;
+  top: 40px;
   left: calc(50% - 100px);
   width: 200px;
+  margin: 0 auto;
   background: ${({ theme }) => theme.bg};
   color: ${({ theme }) => theme.accent};
   border: 2px solid ${({ theme }) => theme.accent};
@@ -76,7 +90,7 @@ export const Image = styled(motion.img)`
   }
 `;
 
-export const Section = styled(motion.section)`
+export const StyledSection = styled(motion.section)`
   margin-left: 40px;
   flex: 1;
   display: flex;

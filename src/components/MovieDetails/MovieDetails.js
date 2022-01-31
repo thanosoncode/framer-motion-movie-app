@@ -1,16 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import Spinner from "./Spinner";
+import Spinner from "../Spinner/Spinner";
 import {
   Container,
   Card,
   Cast,
   Genres,
-  Section,
+  StyledSection,
   Image,
   Button,
-} from "./styles/MovieDetails.styled";
+  Footer,
+} from "./MovieDetails.styled";
+import Section from "../Section/Section";
 
 const containerVariants = {
   hidden: {
@@ -64,23 +66,6 @@ const sectionVariants = {
   },
 };
 
-const genreVariants = {
-  hidden: {
-    opacity: 0,
-    scale: 1,
-  },
-  visible: {
-    originX: 0,
-    opacity: [1, 0],
-    scale: [1.1, 1],
-    transition: {
-      delay: 0.5,
-      duration: 0.2,
-      yoyo: 5,
-    },
-  },
-};
-
 const buttonVariants = {
   hidden: {
     y: 1000,
@@ -91,7 +76,7 @@ const buttonVariants = {
   hover: {
     scale: [1.2, 1],
     transition: {
-      yoyo: Infinity,
+      repeat: Infinity,
       duration: 0.4,
     },
   },
@@ -108,6 +93,7 @@ const MovieDetails = () => {
   let { id } = useParams();
   const [movie, setMovie] = useState(null);
   const [credits, setCredits] = useState(null);
+  const [similar, setSimilar] = useState([]);
 
   useEffect(() => {
     const getDetails = async () => {
@@ -141,11 +127,28 @@ const MovieDetails = () => {
       }
     };
 
+    const getSimilar = async () => {
+      try {
+        const response = await fetch(
+          `https://api.themoviedb.org/3/movie/${id}/similar?api_key=31e2e4cb7fcd919ecae1823621328dc9&language=en-US&page=1`
+        );
+        const data = await response.json();
+        if (data) {
+          setSimilar(data.results);
+        } else {
+          setSimilar(null);
+        }
+      } catch (error) {
+        console.log(error.message);
+      }
+    };
+
     getCredits();
     getDetails();
+    getSimilar();
   }, [id]);
 
-  if (movie && credits) {
+  if (movie && credits && similar) {
     return (
       <>
         <Container
@@ -154,7 +157,8 @@ const MovieDetails = () => {
           initial="hidden"
           animate="visible"
           exit="exit"
-          style={{ backgroundImage: `url(${bgURL + movie.poster_path})` }}
+          img={`url(${bgURL + movie.backdrop_path})`}
+          mobileImg={`url(${bgURL + movie.poster_path})`}
         ></Container>
         <div>
           <Card>
@@ -166,16 +170,25 @@ const MovieDetails = () => {
               src={imageURL + movie.poster_path}
               alt={movie.title}
             />
-            <Section
+            <StyledSection
               variants={sectionVariants}
               initial="hidden"
               animate="visible"
               as={motion.section}
             >
               <h1>{movie.title}</h1>
-              <Genres variants={genreVariants} as={motion.div}>
+              <Genres>
                 {movie.genres.map((genre, index) => {
-                  return <div key={index}>{genre.name}</div>;
+                  return (
+                    <motion.div
+                      key={index}
+                      initial={{ y: "-100vh" }}
+                      animate={{ y: 0 }}
+                      transition={{ delay: 2 + index / 2 }}
+                    >
+                      {genre.name}
+                    </motion.div>
+                  );
                 })}
               </Genres>
               <p>{movie.overview}</p>
@@ -197,20 +210,23 @@ const MovieDetails = () => {
                   })}
                 </Cast>
               </div>
-            </Section>
-            <Button
-              as={motion.button}
-              variants={buttonVariants}
-              whileHover="hover"
-              whileTap="tap"
-              initial="hidden"
-              animate="visible"
-              onClick={() => navigate("/")}
-            >
-              back to movies
-            </Button>
+            </StyledSection>
           </Card>
         </div>
+        <Section title="similar" movies={similar} route="/" />
+        <Footer>
+          <Button
+            as={motion.button}
+            variants={buttonVariants}
+            whileHover="hover"
+            whileTap="tap"
+            initial="hidden"
+            animate="visible"
+            onClick={() => navigate("/")}
+          >
+            back to movies
+          </Button>
+        </Footer>
       </>
     );
   } else {

@@ -9,34 +9,16 @@ import {
   Li,
   Span,
   Links,
-  SwitchContainer,
-  Tools,
   Flex,
-} from "./styles/Navbar.styled.js";
-import { useGlobalContext } from "../context.js";
+} from "./Navbar.styled.js";
+import { useGlobalContext } from "../../context.js";
 import { AnimatePresence, motion } from "framer-motion";
 import { useNavigate, Outlet, useLocation } from "react-router";
-
-const topRatedURL =
-  "https://api.themoviedb.org/3/movie/top_rated?api_key=31e2e4cb7fcd919ecae1823621328dc9&language=en-US&page=1";
-
-const revenueURL =
-  "https://api.themoviedb.org/3/discover/movie?api_key=31e2e4cb7fcd919ecae1823621328dc9&language=en-US&sort_by=revenue.desc&include_adult=false&include_video=false&page=1";
-
-const popularURL =
-  "https://api.themoviedb.org/3/discover/movie?api_key=31e2e4cb7fcd919ecae1823621328dc9&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1";
+import logo from "../../assets/images/logo.jpg";
 
 const Navbar = () => {
-  const {
-    term,
-    setTerm,
-    getMoviesByTerm,
-    getMovies,
-    setTheme,
-    themes,
-    setDatesOneByOne,
-    datesOneByOne,
-  } = useGlobalContext();
+  const { term, setTerm, getMoviesByTerm, setTheme, themes } =
+    useGlobalContext();
 
   const themesEl = useRef();
   const [showMenu, setShowMenu] = useState(false);
@@ -49,7 +31,7 @@ const Navbar = () => {
     let rect = themesEl.current.getBoundingClientRect();
     let left = rect.left - 46 + "px";
     let top = rect.top + 30 + "px";
-    setShowMenu(!showMenu);
+    setShowMenu(true);
     setMenuLocation({ top, left });
   };
 
@@ -58,10 +40,6 @@ const Navbar = () => {
     getMoviesByTerm(term);
     setTerm("");
     navigate("/search");
-  };
-
-  const handleHowDatesPulse = () => {
-    setDatesOneByOne(!datesOneByOne);
   };
 
   return (
@@ -83,9 +61,10 @@ const Navbar = () => {
                     key={index}
                     bg={bg}
                     color={accent}
-                    onClick={() =>
-                      setTheme(themes.find((item) => item.name === theme.name))
-                    }
+                    onClick={() => {
+                      setTheme(themes.find((item) => item.name === theme.name));
+                      setShowMenu(false);
+                    }}
                   >
                     {name}
                   </ThemesLi>
@@ -96,46 +75,22 @@ const Navbar = () => {
         </AnimatePresence>
         <StyledNav as={motion.nav}>
           <Links>
-            <Li
-              name={"/"}
-              location={pathname}
-              onClick={() => {
-                getMovies(popularURL);
-              }}
-            >
-              <Link to={{ pathname: "/" }}>most viewed</Link>
+            <Li>
+              <Link to={{ pathname: "/" }}>
+                <img src={logo} alt="logo" />
+              </Link>
             </Li>
-            <Li
-              name={"/toprated"}
-              location={pathname}
-              onClick={() => {
-                getMovies(topRatedURL);
-              }}
-            >
+            <Li name={"/mostviewed"} location={pathname}>
+              <Link to={{ pathname: "/mostviewed" }}>most viewed</Link>
+            </Li>
+            <Li name={"/toprated"} location={pathname}>
               <Link to={{ pathname: "/toprated" }}>top rated</Link>
             </Li>
-            <Li
-              name={"/bestselling"}
-              location={pathname}
-              onClick={() => {
-                getMovies(revenueURL);
-              }}
-            >
+            <Li name={"/bestselling"} location={pathname}>
               <Link to={{ pathname: "/bestselling" }}>best selling</Link>
             </Li>
           </Links>
           <Flex>
-            <Tools>
-              <span>dates 1&#8211;1</span>
-              <SwitchContainer
-                onClick={handleHowDatesPulse}
-                move={datesOneByOne ? "translateX(100%)" : "translateX(0)"}
-                datesOneByOne={datesOneByOne ? "on" : "off"}
-              >
-                <div></div>
-              </SwitchContainer>
-            </Tools>
-
             <Span
               ref={themesEl}
               onClick={handleThemesClick}

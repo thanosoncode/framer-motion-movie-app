@@ -3,19 +3,21 @@ import { motion } from "framer-motion";
 
 export const MovieListContainer = styled(motion.div)`
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: repeat(auto-fill, 200px);
+  justify-content: center;
   justify-items: center;
-  gap: 50px;
+  gap: 20px;
 
   padding: 50px;
-  max-width: 1100px;
+  max-width: 1300px;
   margin: 0 auto;
   overflow: hidden;
 
   @media (max-width: 768px) {
-    padding: 10px;
-    margin: 40px auto;
-    width: 100%;
+    width: 100vw;
+    grid-template-columns: repeat(auto-fill, 180px);
+    gap: 10px;
+    padding: 50px 0;
   }
 `;
 

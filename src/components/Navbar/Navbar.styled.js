@@ -33,14 +33,14 @@ export const StyledNav = styled(motion.nav)`
   input {
     outline: none;
     padding: 5px 10px;
-    border-radius: 5px;
+    border-radius: 2px;
   }
 
   @media (max-width: 768px) {
     padding: 8px 20px;
-    flex-direction: column-reverse;
+    flex-direction: column;
     input {
-      padding: 5px;
+      padding: 2px 5px 2px 10px;
       width: 150px;
     }
   }
@@ -53,6 +53,10 @@ export const StyledNav = styled(motion.nav)`
 export const Flex = styled.div`
   display: flex;
   align-items: center;
+  justify-content: center;
+
+  @media (max-width: 768px) {
+  }
 `;
 
 export const Links = styled.ul`
@@ -60,8 +64,13 @@ export const Links = styled.ul`
   display: flex;
   align-items: center;
 
+  img {
+    width: 60px;
+    height: 30px;
+  }
+
   @media (max-width: 768px) {
-    margin-top: 10px;
+    margin-bottom: 10px;
   }
 `;
 
@@ -72,6 +81,10 @@ export const Li = styled.li`
   font-weight: 600;
   color: ${({ location, theme, name }) =>
     location === name ? theme.accent : theme.color};
+
+  @media (max-width: 768px) {
+    margin-right: 10px;
+  }
 `;
 
 export const Span = styled.span`
@@ -82,7 +95,7 @@ export const Span = styled.span`
   color: ${({ menu, theme }) => (menu === "open" ? theme.accent : theme.color)};
 
   @media (max-width: 768px) {
-    margin-right: 5px;
+    margin-right: 25px;
   }
 `;
 
@@ -125,39 +138,5 @@ export const ThemesLi = styled.li`
 
   @media (max-width: 768px) {
     margin-bottom: 8px;
-  }
-`;
-
-export const Tools = styled.div`
-  display: flex;
-  align-items: center;
-  margin-right: 10px;
-  justify-content: center;
-
-  span {
-    margin-right: 5px;
-    display: block;
-  }
-`;
-
-export const SwitchContainer = styled.div`
-  position: relative;
-  background-color: ${({ theme, datesOneByOne }) =>
-    datesOneByOne === "on" ? theme.accent : theme.bg};
-  width: 38px;
-  height: 18px;
-  border-radius: 999px;
-
-  div {
-    position: absolute;
-    width: 18px;
-    height: 18px;
-    left: 1px;
-    border-radius: 100%;
-    background-color: white;
-    cursor: pointer;
-    border: 1px solid #777;
-    transition: 0.3s ease;
-    transform: ${(props) => props.move};
   }
 `;
